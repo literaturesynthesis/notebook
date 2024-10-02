@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="A notebook derived from the FRB-CESAB, PatriNat &amp; Cirad Hortsys training course     ">
 
-<title>Introduction – Exploring and visualizing meta-analytical data using R</title>
+<title>Introduction – Meta-analyses &amp; Systematic reviews</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -114,7 +115,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">Exploring and visualizing meta-analytical data using R</a> 
+      <a href="../">Meta-analyses &amp; Systematic reviews</a> 
     </div>
       </div>
     <div class="sidebar-menu-container"> 
@@ -153,8 +154,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#toward-transparency-and-reproducibility" id="toc-toward-transparency-and-reproducibility" class="nav-link active" data-scroll-target="#toward-transparency-and-reproducibility">Toward transparency and reproducibility</a></li>
-  <li><a href="#publishing-fully-reproducible-protocols" id="toc-publishing-fully-reproducible-protocols" class="nav-link" data-scroll-target="#publishing-fully-reproducible-protocols">Publishing Fully Reproducible Protocols</a></li>
+  <li><a href="#toward-transparency-and-reproducibility" id="toc-toward-transparency-and-reproducibility" class="nav-link active" data-scroll-target="#toward-transparency-and-reproducibility">Toward transparency and reproducibility</a>
+  <ul class="collapse">
+  <li><a href="#reporting-standards-in-systematic-reviews-prisma-roses-and-beyond" id="toc-reporting-standards-in-systematic-reviews-prisma-roses-and-beyond" class="nav-link" data-scroll-target="#reporting-standards-in-systematic-reviews-prisma-roses-and-beyond">Reporting Standards in systematic reviews: PRISMA, ROSES, and Beyond</a></li>
+  </ul></li>
+  <li><a href="#publishing-fully-reproducible-protocols" id="toc-publishing-fully-reproducible-protocols" class="nav-link" data-scroll-target="#publishing-fully-reproducible-protocols">Publishing Fully Reproducible Protocols</a>
+  <ul class="collapse">
+  <li><a href="#key-components-of-a-research-protocol" id="toc-key-components-of-a-research-protocol" class="nav-link" data-scroll-target="#key-components-of-a-research-protocol">Key Components of a Research Protocol</a></li>
+  <li><a href="#importance-in-meta-analyses-and-evidence-synthesis" id="toc-importance-in-meta-analyses-and-evidence-synthesis" class="nav-link" data-scroll-target="#importance-in-meta-analyses-and-evidence-synthesis">Importance in Meta-Analyses and Evidence Synthesis</a></li>
+  <li><a href="#standards-and-guidelines" id="toc-standards-and-guidelines" class="nav-link" data-scroll-target="#standards-and-guidelines">Standards and Guidelines</a></li>
+  <li><a href="#journals-specializing-in-protocols" id="toc-journals-specializing-in-protocols" class="nav-link" data-scroll-target="#journals-specializing-in-protocols">Journals Specializing in Protocols</a></li>
+  <li><a href="#example-of-a-protocol-publication" id="toc-example-of-a-protocol-publication" class="nav-link" data-scroll-target="#example-of-a-protocol-publication">Example of a Protocol Publication</a></li>
+  <li><a href="#useful-links-for-protocol-standards-and-templates" id="toc-useful-links-for-protocol-standards-and-templates" class="nav-link" data-scroll-target="#useful-links-for-protocol-standards-and-templates">Useful Links for Protocol Standards and Templates</a></li>
+  </ul></li>
   <li><a href="#publish-a-datapaper" id="toc-publish-a-datapaper" class="nav-link" data-scroll-target="#publish-a-datapaper">Publish a DataPaper</a>
   <ul class="collapse">
   <li><a href="#publishing-in-open-access-journals" id="toc-publishing-in-open-access-journals" class="nav-link" data-scroll-target="#publishing-in-open-access-journals">Publishing in Open Access Journals</a></li>
@@ -162,7 +174,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#best-practices-for-structuring-meta-analysis-datafiles" id="toc-best-practices-for-structuring-meta-analysis-datafiles" class="nav-link" data-scroll-target="#best-practices-for-structuring-meta-analysis-datafiles">Best practices for structuring Meta-analysis DataFiles</a>
   <ul class="collapse">
   <li><a href="#generalities" id="toc-generalities" class="nav-link" data-scroll-target="#generalities">Generalities</a></li>
-  <li><a href="#harmonisable-classifications-of-practices-and-outcome" id="toc-harmonisable-classifications-of-practices-and-outcome" class="nav-link" data-scroll-target="#harmonisable-classifications-of-practices-and-outcome">harmonisable classifications of practices and outcome</a></li>
+  <li><a href="#harmonisable-classifications-of-practices-and-outcome" id="toc-harmonisable-classifications-of-practices-and-outcome" class="nav-link" data-scroll-target="#harmonisable-classifications-of-practices-and-outcome">Harmonisable classifications of practices and outcome</a></li>
   </ul></li>
   <li><a href="#example-meta-analysis-datasets" id="toc-example-meta-analysis-datasets" class="nav-link" data-scroll-target="#example-meta-analysis-datasets">Example: Meta-analysis datasets</a>
   <ul class="collapse">
@@ -208,8 +220,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p><strong>Interoperable</strong>: Data should be compatible with other datasets and tools. Standardized formats (e.g., CSV, JSON) and recognized metadata structures like Dublin Core help ensure that datasets can be integrated and compared across different systems.</p></li>
 <li><p><strong>Reusable</strong>: Data must be well-documented, with detailed metadata providing sufficient context to allow future researchers to reuse it effectively. This includes information on the dataset’s provenance, context, and usage conditions, ensuring that it can be reliably understood and repurposed in new research contexts.</p></li>
 </ul>
-<section id="reporting-standards-in-systematic-reviews-prisma-roses-and-beyond" class="level4">
-<h4 class="anchored" data-anchor-id="reporting-standards-in-systematic-reviews-prisma-roses-and-beyond">Reporting Standards in systematic reviews: PRISMA, ROSES, and Beyond</h4>
+<section id="reporting-standards-in-systematic-reviews-prisma-roses-and-beyond" class="level3">
+<h3 class="anchored" data-anchor-id="reporting-standards-in-systematic-reviews-prisma-roses-and-beyond">Reporting Standards in systematic reviews: PRISMA, ROSES, and Beyond</h3>
 <p>In systematic reviews and meta-analyses, following standardized reporting guidelines is essential for transparency and reproducibility. The most widely used framework is the <strong>PRISMA (Preferred Reporting Items for Systematic Reviews and Meta-Analyses)</strong> guideline, which outlines the minimum information that should be included in a systematic review, covering everything from search strategies to result synthesis. PRISMA encourages the use of flow diagrams to illustrate the study selection process, making the review process clear and replicable.</p>
 <p>For environmental and social sciences, the <strong>ROSES (Reporting Standards for Systematic Evidence Syntheses)</strong> framework offers a tailored alternative. It includes checklists and flow diagrams similar to PRISMA but adapted for the specific challenges of conducting systematic reviews in complex, interdisciplinary fields like ecology, conservation, and agriculture.</p>
 <p><strong>Using these frameworks ensures:</strong></p>
@@ -223,8 +235,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="publishing-fully-reproducible-protocols" class="level2">
 <h2 class="anchored" data-anchor-id="publishing-fully-reproducible-protocols">Publishing Fully Reproducible Protocols</h2>
 <p>While pre-registration of protocols has become standard practice in fields like medicine—facilitated by platforms such as PROSPERO—it is still in the early stages of adoption within agronomy and ecology. In evidence synthesis and meta-analysis, publishing detailed and reproducible research protocols is increasingly recognized as essential for enhancing transparency and minimizing bias. This approach is well-established in medical research, where systematic reviews and meta-analyses typically adhere to stringent pre-registration guidelines. However, it has yet to gain similar traction in agronomy and ecology, highlighting an important area for growth and improvement in these disciplines. Encouraging the use of pre-published protocols in these fields would improve methodological rigor, comparability of results, and overall transparency in environmental and agricultural research. Protocols describe the step-by-step methodologies researchers intend to follow before conducting a study. They ensure transparency, reproducibility, and consistency in systematic reviews, meta-analyses, and other research designs by pre-registering the research questions, criteria for study inclusion, and planned analytical methods. This practice minimizes bias, prevents selective reporting, and enhances the credibility of findings.</p>
-<section id="key-components-of-a-research-protocol" class="level4">
-<h4 class="anchored" data-anchor-id="key-components-of-a-research-protocol">Key Components of a Research Protocol</h4>
+<section id="key-components-of-a-research-protocol" class="level3">
+<h3 class="anchored" data-anchor-id="key-components-of-a-research-protocol">Key Components of a Research Protocol</h3>
 <ol type="1">
 <li><p><strong>Research Objectives and Questions</strong>: Clearly defines the goals of the study and the specific research questions to be addressed.</p></li>
 <li><p><strong>Eligibility Criteria</strong>: Specifies which studies will be included or excluded based on predefined parameters (e.g., study design, population characteristics, intervention type).</p></li>
@@ -234,13 +246,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p><strong>Analytical Plan</strong>: Pre-specifies statistical methods, models, and subgroup analyses to be used, ensuring that analytical choices are not influenced by observed results.</p></li>
 </ol>
 </section>
-<section id="importance-in-meta-analyses-and-evidence-synthesis" class="level4">
-<h4 class="anchored" data-anchor-id="importance-in-meta-analyses-and-evidence-synthesis">Importance in Meta-Analyses and Evidence Synthesis</h4>
+<section id="importance-in-meta-analyses-and-evidence-synthesis" class="level3">
+<h3 class="anchored" data-anchor-id="importance-in-meta-analyses-and-evidence-synthesis">Importance in Meta-Analyses and Evidence Synthesis</h3>
 <p>Publishing a detailed protocol before initiating a meta-analysis or systematic review is crucial for avoiding bias and maintaining scientific rigor. Protocols act as a roadmap, guiding researchers through the review process and serving as a reference point against which deviations can be assessed. This is particularly important for high-stakes reviews, such as those informing policy decisions or large-scale evidence syntheses in public health and environmental sciences.</p>
 <p>Well-developed protocols also enhance collaboration and standardization within research communities by enabling other researchers to replicate or build upon the same methodology. In ecological and agronomic meta-analyses, where diverse study designs and heterogeneous data sources are common, robust protocols are indispensable for harmonizing evidence and ensuring comparability across studies.</p>
 </section>
-<section id="standards-and-guidelines" class="level4">
-<h4 class="anchored" data-anchor-id="standards-and-guidelines">Standards and Guidelines</h4>
+<section id="standards-and-guidelines" class="level3">
+<h3 class="anchored" data-anchor-id="standards-and-guidelines">Standards and Guidelines</h3>
 <p>Several frameworks provide comprehensive guidance for developing and publishing reproducible protocols:</p>
 <ul>
 <li><p><strong>Cochrane Handbook for Systematic Reviews</strong>: The Cochrane Collaboration sets the gold standard for systematic reviews in health and medical research. Its protocols follow a highly structured format that emphasizes transparency, replicability, and methodological rigor.</p></li>
@@ -248,8 +260,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p><strong>PRISMA-P (Preferred Reporting Items for Systematic Review and Meta-Analysis Protocols)</strong>: PRISMA-P is designed to standardize the reporting of protocols for systematic reviews and meta-analyses, ensuring all critical elements are included.</p></li>
 </ul>
 </section>
-<section id="journals-specializing-in-protocols" class="level4">
-<h4 class="anchored" data-anchor-id="journals-specializing-in-protocols">Journals Specializing in Protocols</h4>
+<section id="journals-specializing-in-protocols" class="level3">
+<h3 class="anchored" data-anchor-id="journals-specializing-in-protocols">Journals Specializing in Protocols</h3>
 <p>Several specialized journals focus on publishing research protocols, providing a platform for researchers to share detailed methodological plans and facilitate reproducibility:</p>
 <ul>
 <li><p><strong>BMC Systematic Reviews</strong>: Publishes protocols and reviews in health, social, and environmental sciences. BMC Systematic Reviews requires that all protocols adhere to PRISMA-P or similar reporting standards.</p></li>
@@ -259,13 +271,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p><strong>PROSPERO</strong>: An international database for pre-registering protocols of systematic reviews focused on health and social care.</p></li>
 </ul>
 </section>
-<section id="example-of-a-protocol-publication" class="level4">
-<h4 class="anchored" data-anchor-id="example-of-a-protocol-publication">Example of a Protocol Publication</h4>
+<section id="example-of-a-protocol-publication" class="level3">
+<h3 class="anchored" data-anchor-id="example-of-a-protocol-publication">Example of a Protocol Publication</h3>
 <p><strong>Rousset, C., Segura, C., Gilgen, A., Alfaro, M., Mendes, L.A., Dodd, M., Dashpurev, B., Bastidas, M., Rivera, J., Merbold, L. and Vázquez, E., 2024. What evidence exists relating the impact of different grassland management practices to soil carbon in livestock systems? A systematic map protocol. <em>Environmental Evidence</em>, <em>13</em>(1), p.22.</strong></p>
 <p>This protocol describes a systematic review and meta-analysis aimed at adapting health systems in crisis settings. The document pre-specifies all methodological details, including eligibility criteria, data extraction strategies, and planned analyses, ensuring reproducibility and transparency throughout the study.</p>
 </section>
-<section id="useful-links-for-protocol-standards-and-templates" class="level4">
-<h4 class="anchored" data-anchor-id="useful-links-for-protocol-standards-and-templates">Useful Links for Protocol Standards and Templates</h4>
+<section id="useful-links-for-protocol-standards-and-templates" class="level3">
+<h3 class="anchored" data-anchor-id="useful-links-for-protocol-standards-and-templates">Useful Links for Protocol Standards and Templates</h3>
 <ul>
 <li><p><strong>Cochrane Handbook for Systematic Reviews of Interventions</strong>: Cochrane Handbook</p></li>
 <li><p><strong>PRISMA-P Reporting Guidelines</strong>: PRISMA-P Checklist</p></li>
@@ -329,91 +341,91 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>Field</th>
-<th>Soil pH</th>
-<th>Nitrogen Content (%)</th>
-<th>Crop Yield (kg/ha)</th>
+<th style="text-align: center;">Field</th>
+<th style="text-align: right;">Soil pH</th>
+<th style="text-align: right;">Nitrogen Content (%)</th>
+<th style="text-align: right;">Crop Yield (kg/ha)</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>1</td>
-<td>6.5</td>
-<td>45</td>
-<td>3000</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: right;">6.5</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">3000</td>
 </tr>
 <tr class="even">
-<td>2</td>
-<td>6.8</td>
-<td>50</td>
-<td>3200</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: right;">6.8</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">3200</td>
 </tr>
 <tr class="odd">
-<td>3</td>
-<td>6.2</td>
-<td>40</td>
-<td>2800</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: right;">6.2</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">2800</td>
 </tr>
 </tbody>
 </table></li>
-<li><p><em>Long Format</em>: More suitable for meta-analysis and visualization in R. Each row contains a single observation or a study’s outcome, which allows for easier aggregation, filtering, and plotting.</p></li>
-</ul>
+<li><p><em>Long Format</em>: More suitable for meta-analysis and visualization in R. Each row contains a single observation or a study’s outcome, which allows for easier aggregation, filtering, and plotting.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
-<th>Field</th>
-<th>Variable</th>
-<th>Value</th>
+<th style="text-align: center;">Field</th>
+<th style="text-align: left;">Variable</th>
+<th style="text-align: right;">Value</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>1</td>
-<td>Soil pH</td>
-<td>6.5</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">Soil pH</td>
+<td style="text-align: right;">6.5</td>
 </tr>
 <tr class="even">
-<td>1</td>
-<td>Nitrogen Content</td>
-<td>45</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">Nitrogen Content</td>
+<td style="text-align: right;">45 .0</td>
 </tr>
 <tr class="odd">
-<td>1</td>
-<td>Crop Yield</td>
-<td>3000</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">Crop Yield</td>
+<td style="text-align: right;">3000.0</td>
 </tr>
 <tr class="even">
-<td>2</td>
-<td>Soil pH</td>
-<td>6.8</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">Soil pH</td>
+<td style="text-align: right;">6.8</td>
 </tr>
 <tr class="odd">
-<td>2</td>
-<td>Nitrogen Content</td>
-<td>50</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">Nitrogen Content</td>
+<td style="text-align: right;">50.0</td>
 </tr>
 <tr class="even">
-<td>2</td>
-<td>Crop Yield</td>
-<td>3200</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">Crop Yield</td>
+<td style="text-align: right;">3200.0</td>
 </tr>
 <tr class="odd">
-<td>3</td>
-<td>Soil pH</td>
-<td>6.2</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">Soil pH</td>
+<td style="text-align: right;">6.2</td>
 </tr>
 <tr class="even">
-<td>3</td>
-<td>Nitrogen Content</td>
-<td>40</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">Nitrogen Content</td>
+<td style="text-align: right;">40.0</td>
 </tr>
 <tr class="odd">
-<td>3</td>
-<td>Crop Yield</td>
-<td>2800</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">Crop Yield</td>
+<td style="text-align: right;">2800.0</td>
 </tr>
 </tbody>
-</table>
+</table></li>
+</ul>
 <ol start="4" type="1">
 <li><p><strong>Handling Missing Data</strong>: It’s common to encounter missing data in meta-analyses. Best practices include:</p>
 <ul>
@@ -426,7 +438,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 </section>
 <section id="harmonisable-classifications-of-practices-and-outcome" class="level3">
-<h3 class="anchored" data-anchor-id="harmonisable-classifications-of-practices-and-outcome">harmonisable classifications of practices and outcome</h3>
+<h3 class="anchored" data-anchor-id="harmonisable-classifications-of-practices-and-outcome">Harmonisable classifications of practices and outcome</h3>
 <p>Meta-analysis and evidence synthesis necessitate consistent and harmonized classifications of interventions, practices, and outcomes to ensure the comparability of findings across studies and geographic contexts. In agricultural and ecological research, the diversity of practices, variations in terminology, and the complex relationships between interventions and their impacts on multiple outcomes complicate this classification task. This chapter highlights the importance of employing ontologies as a foundational step in developing harmonizable classifications. Investing the time to establish clear definitions and boundaries between classes for practices, outcomes, and site descriptions is crucial. A well-defined research question can further refine the scope, facilitating the classification process. By systematically categorizing agricultural practices and outcomes, researchers can enhance the rigor and relevance of meta-analytical studies, ultimately contributing to more robust evidence synthesis</p>
 </section>
 </section>
@@ -451,9 +463,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat.curtis1998</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Explore curtis data</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("skimr")</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  id paper   genus     species fungrp co2.ambi co2.elev units time pot method
 1 21    44   ALNUS       RUBRA  N2FIX      350      650  ul/l   47 0.5     GC
@@ -484,14 +494,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 Visit the <a href="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/XIDI1X">Harvard Dataverse website</a>.<br>
 Download all files and save them in your current working directory.</li>
 </ol>
-<p>By following these steps, you will be well-equipped to utilize the dataset for the upcoming exercises in this module.<br>
-</p>
+<p>By following these steps, you will be well-equipped to utilize the dataset for the upcoming exercises in this module.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("readxl")</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># charge le fichier</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>Meta_Data <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="at">path  =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"dataset-1-sources.xlsx"</span>), </span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                                <span class="at">sheet =</span> <span class="st">"Literature_screened"</span>)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Meta_Data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>metadata <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="at">path  =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"dataset-1-sources.xlsx"</span>), </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                               <span class="at">sheet =</span> <span class="st">"Literature_screened"</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(metadata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 19
      ID Article_source  Inclusion_yes_no Exclusion_reasion_pico Exclusion_reason
@@ -507,9 +514,11 @@ Download all files and save them in your current working directory.</li>
 #   Page_start &lt;chr&gt;, Page_end &lt;chr&gt;, Page_count &lt;chr&gt;, DOI &lt;chr&gt;, Link &lt;chr&gt;,
 #   ISSN &lt;chr&gt;, ISBN &lt;chr&gt;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Outcome <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="at">path  =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"dataset-2-outcomes.xlsx"</span>), </span>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>outcome <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="at">path  =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"dataset-2-outcomes.xlsx"</span>), </span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                              <span class="at">sheet =</span> <span class="st">"Data"</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Outcome)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(outcome)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 105
      ID Experiment_stage Comparison_ID_C Comparison_class_C Crop_C Crop_FAO_C   
@@ -971,10 +980,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p>© Damien Beillouin</p>
+<p>License <a href="https://github.com/literaturesynthesis/notebook">CC BY 4.0</a></p>
 </div>   
     <div class="nav-footer-center">
-<p>Code source available on <a href="https://github.com/dbeillouin/Visualisation1/"><i class="fa-brands fa-github" aria-label="github"></i></a></p>
+<p>Code source available on <a href="https://github.com/literaturesynthesis/notebook/"><i class="fa-brands fa-github" aria-label="github"></i></a></p>
 </div>
     <div class="nav-footer-right">
 <p>Built with <a href="https://quarto.org/">Quarto</a></p>
