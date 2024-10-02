@@ -34,7 +34,7 @@ Breakdown of FAIR Principles:
 -   **Reusable**: Data must be well-documented, with detailed metadata providing sufficient context to allow future researchers to reuse it effectively.
     This includes information on the dataset’s provenance, context, and usage conditions, ensuring that it can be reliably understood and repurposed in new research contexts.
 
-#### Reporting Standards in systematic reviews: PRISMA, ROSES, and Beyond
+### Reporting Standards in systematic reviews: PRISMA, ROSES, and Beyond
 
 In systematic reviews and meta-analyses, following standardized reporting guidelines is essential for transparency and reproducibility.
 The most widely used framework is the **PRISMA (Preferred Reporting Items for Systematic Reviews and Meta-Analyses)** guideline, which outlines the minimum information that should be included in a systematic review, covering everything from search strategies to result synthesis.
@@ -63,7 +63,7 @@ Protocols describe the step-by-step methodologies researchers intend to follow b
 They ensure transparency, reproducibility, and consistency in systematic reviews, meta-analyses, and other research designs by pre-registering the research questions, criteria for study inclusion, and planned analytical methods.
 This practice minimizes bias, prevents selective reporting, and enhances the credibility of findings.
 
-#### Key Components of a Research Protocol
+### Key Components of a Research Protocol
 
 1.  **Research Objectives and Questions**: Clearly defines the goals of the study and the specific research questions to be addressed.
 
@@ -77,7 +77,7 @@ This practice minimizes bias, prevents selective reporting, and enhances the cre
 
 6.  **Analytical Plan**: Pre-specifies statistical methods, models, and subgroup analyses to be used, ensuring that analytical choices are not influenced by observed results.
 
-#### Importance in Meta-Analyses and Evidence Synthesis
+### Importance in Meta-Analyses and Evidence Synthesis
 
 Publishing a detailed protocol before initiating a meta-analysis or systematic review is crucial for avoiding bias and maintaining scientific rigor.
 Protocols act as a roadmap, guiding researchers through the review process and serving as a reference point against which deviations can be assessed.
@@ -86,7 +86,7 @@ This is particularly important for high-stakes reviews, such as those informing 
 Well-developed protocols also enhance collaboration and standardization within research communities by enabling other researchers to replicate or build upon the same methodology.
 In ecological and agronomic meta-analyses, where diverse study designs and heterogeneous data sources are common, robust protocols are indispensable for harmonizing evidence and ensuring comparability across studies.
 
-#### Standards and Guidelines
+### Standards and Guidelines
 
 Several frameworks provide comprehensive guidance for developing and publishing reproducible protocols:
 
@@ -97,7 +97,7 @@ Several frameworks provide comprehensive guidance for developing and publishing 
 
 -   **PRISMA-P (Preferred Reporting Items for Systematic Review and Meta-Analysis Protocols)**: PRISMA-P is designed to standardize the reporting of protocols for systematic reviews and meta-analyses, ensuring all critical elements are included.
 
-#### Journals Specializing in Protocols
+### Journals Specializing in Protocols
 
 Several specialized journals focus on publishing research protocols, providing a platform for researchers to share detailed methodological plans and facilitate reproducibility:
 
@@ -115,14 +115,14 @@ Several specialized journals focus on publishing research protocols, providing a
 
 -   **PROSPERO**: An international database for pre-registering protocols of systematic reviews focused on health and social care.
 
-#### Example of a Protocol Publication
+### Example of a Protocol Publication
 
 **Rousset, C., Segura, C., Gilgen, A., Alfaro, M., Mendes, L.A., Dodd, M., Dashpurev, B., Bastidas, M., Rivera, J., Merbold, L. and Vázquez, E., 2024. What evidence exists relating the impact of different grassland management practices to soil carbon in livestock systems? A systematic map protocol. *Environmental Evidence*, *13*(1), p.22.**
 
 This protocol describes a systematic review and meta-analysis aimed at adapting health systems in crisis settings.
 The document pre-specifies all methodological details, including eligibility criteria, data extraction strategies, and planned analyses, ensuring reproducibility and transparency throughout the study.
 
-#### Useful Links for Protocol Standards and Templates
+### Useful Links for Protocol Standards and Templates
 
 -   **Cochrane Handbook for Systematic Reviews of Interventions**: Cochrane Handbook
 
@@ -208,7 +208,7 @@ Prioritizing non-profit journals also supports sustainable publishing practices 
 -   *Wide Format*: Used when each row represents a study, with multiple columns for each outcome (e.g., separate columns for effect sizes).
 
     | Field | Soil pH | Nitrogen Content (%) | Crop Yield (kg/ha) |
-    |-------|---------|----------------------|--------------------|
+    |:-----:|--------:|---------------------:|-------------------:|
     | 1     | 6.5     | 45                   | 3000               |
     | 2     | 6.8     | 50                   | 3200               |
     | 3     | 6.2     | 40                   | 2800               |
@@ -216,17 +216,17 @@ Prioritizing non-profit journals also supports sustainable publishing practices 
 -   *Long Format*: More suitable for meta-analysis and visualization in R.
     Each row contains a single observation or a study's outcome, which allows for easier aggregation, filtering, and plotting.
 
-| Field | Variable         | Value |
-|-------|------------------|-------|
-| 1     | Soil pH          | 6.5   |
-| 1     | Nitrogen Content | 45    |
-| 1     | Crop Yield       | 3000  |
-| 2     | Soil pH          | 6.8   |
-| 2     | Nitrogen Content | 50    |
-| 2     | Crop Yield       | 3200  |
-| 3     | Soil pH          | 6.2   |
-| 3     | Nitrogen Content | 40    |
-| 3     | Crop Yield       | 2800  |
+    | Field | Variable         | Value  |
+    |:-----:|:-----------------|-------:|
+    | 1     | Soil pH          | 6.5    |
+    | 1     | Nitrogen Content | 45 .0  |
+    | 1     | Crop Yield       | 3000.0 |
+    | 2     | Soil pH          | 6.8    |
+    | 2     | Nitrogen Content | 50.0   |
+    | 2     | Crop Yield       | 3200.0 |
+    | 3     | Soil pH          | 6.2    |
+    | 3     | Nitrogen Content | 40.0   |
+    | 3     | Crop Yield       | 2800.0 |
 
 4.  **Handling Missing Data**: It’s common to encounter missing data in meta-analyses.
     Best practices include:
@@ -242,7 +242,7 @@ Prioritizing non-profit journals also supports sustainable publishing practices 
     Double-check for typographical errors, duplicates, and inconsistencies in categorical data.
     Tools like `dplyr::mutate()` and `tidyr::pivot_longer()` can aid in cleaning and restructuring data for analysis.
 
-### harmonisable classifications of practices and outcome
+### Harmonisable classifications of practices and outcome
 
 Meta-analysis and evidence synthesis necessitate consistent and harmonized classifications of interventions, practices, and outcomes to ensure the comparability of findings across studies and geographic contexts.
 In agricultural and ecological research, the diversity of practices, variations in terminology, and the complex relationships between interventions and their impacts on multiple outcomes complicate this classification task.
@@ -267,7 +267,6 @@ library(metadat)
 
 #List of dataset included
 help(package = metadat)
-
 ```
 
 Each dataset is well-documented with metadata, including concept terms such as research field, outcome measures, and analytic models.
@@ -282,8 +281,6 @@ To contribute or explore more in-depth examples, visit the package’s online do
 dat <- dat.curtis1998
 
 # Explore curtis data
-#install.packages("skimr")
-library(skimr)
 head(dat)
 ```
 
@@ -303,16 +300,16 @@ This dataset serves as a valuable resource for researchers and practitioners, fa
     Visit the [Harvard Dataverse website](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/XIDI1X).\
     Download all files and save them in your current working directory.
 
-By following these steps, you will be well-equipped to utilize the dataset for the upcoming exercises in this module.\
+By following these steps, you will be well-equipped to utilize the dataset for the upcoming exercises in this module.
 
 ```{r}
-# install.packages("readxl")
-# charge le fichier
-Meta_Data <- readxl::read_excel(path  = here::here("data", "dataset-1-sources.xlsx"), 
-                                sheet = "Literature_screened")
-head(Meta_Data)
+metadata <- readxl::read_excel(path  = here::here("data", "dataset-1-sources.xlsx"), 
+                               sheet = "Literature_screened")
+head(metadata)
+```
 
-Outcome <- readxl::read_excel(path  = here::here("data", "dataset-2-outcomes.xlsx"), 
+```{r}
+outcome <- readxl::read_excel(path  = here::here("data", "dataset-2-outcomes.xlsx"), 
                               sheet = "Data")
-head(Outcome)
+head(outcome)
 ```

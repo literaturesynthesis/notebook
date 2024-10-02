@@ -28,6 +28,11 @@ jobs:
           packages:
             any::knitr
             any::rmarkdown
+            any::metadat
+            any::readxl
+            any::ggplot2
+            any::dplyr
+            any::DT
 
       - name: Render and Publish
         uses: quarto-dev/quarto-actions/publish@v2

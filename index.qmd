@@ -13,7 +13,7 @@ Whether you're new to {{< fa brands r-project >}} or looking to expand your data
 
 ## Material {.unnumbered}
 
-All the material used in this book is available at: <https://github.com/dbeillouin/Visualisation1/>
+All the material used in this book is available at: <https://github.com/literaturesynthesis/notebook/>
 
 
 
@@ -24,9 +24,9 @@ All the material used in this book is available at: <https://github.com/dbeillou
 
 ## Contributions {.unnumbered}
 
-If you see mistakes or want to suggest changes, please [create an issue](https://github.com/dbeillouin/Visualisation1/issues/new) on the source repository.
+If you see mistakes or want to suggest changes, please [create an issue](https://github.com/literaturesynthesis/notebook/issues/new) on the source repository.
 
 
 ## Reuse {.unnumbered}
 
-Text and figures are licensed under Creative Commons Attribution [CC By 4.0](https://creativecommons.org/licenses/by/4.0/), unless otherwise noted.
+Text and figures are licensed under Creative Commons Attribution [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), unless otherwise noted.
