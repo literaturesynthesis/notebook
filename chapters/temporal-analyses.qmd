@@ -25,7 +25,7 @@ In some cases, a combination of both graph types can provide a comprehensive vie
 
 ## Practice
 
-To illustrate temporal analysis in R, we will use the `ggplot2` and `dplyr` packages to create both cumulative sum and count graphs.
+To illustrate temporal analysis in R, we will use the [`ggplot2`](https://ggplot2.tidyverse.org/) and [`dplyr`](https://dplyr.tidyverse.org/) packages to create both cumulative sum and count graphs.
 Below is an example of how to plot these two types of graphs using fictional publication data.
 
 
@@ -36,29 +36,33 @@ Below is an example of how to plot these two types of graphs using fictional pub
 
 
 ```{r}
-# Load required libraries ----
+#| label: "attach-packages"
+
+# Attach required libraries ----
 library(ggplot2)
-library(dplyr, warn.conflicts = FALSE)
+library(dplyr)
 ```
 
 **Importing dataset**
 
 ```{r}
+#| label: "import-data"
+
+# Import datasets ----
 metadata <- readxl::read_excel(path  = here::here("data", "dataset-1-sources.xlsx"), 
                                sheet = "Literature_screened")
 
-outcome <- readxl::read_excel(path  = here::here("data", "dataset-2-outcomes.xlsx"), 
-                              sheet = "Data")
+outcome  <- readxl::read_excel(path  = here::here("data", "dataset-2-outcomes.xlsx"), 
+                               sheet = "Data")
 ```
 
 
 
 ```{r}
-#| message: false
+#| label: "left-join"
 
-# Merge the outcome dataset with metadata
-# TAB should be your combined dataset, with relevant variables
-TAB <- left_join(outcome, metadata)
+# Merge datasets ----
+tab <- left_join(outcome, metadata)
 ```
 
 ### Count Graph
@@ -67,22 +71,30 @@ This graph visualizes the count of different studies published each year.
 It uses a bar graph to display the number of studies per publication year, making it easy to compare across years
 
 ```{r}
-#| echo: true
-#| out-width: '100%'
+#| label: "summarize-data-by-year"
 
-# Count Graph
-count_data <- TAB %>%
-  group_by(Year) %>%  # Group data by publication year
-  summarise(Count = n(), .groups = "drop")  # Count studies per year
+# Summarize data by year ----
+count_data <- tab %>%
+  group_by(Year) %>%
+  summarise(Count = n(), .groups = "drop")
+```
 
-# Plot the count graph
+```{r}
+#| label: "count-graph"
+
+# Count graph ----
 ggplot(count_data, aes(x = Year, y = Count)) +
-  geom_bar(stat = "identity", fill = "steelblue") +  # Create a bar graph
+  
+  geom_bar(stat = "identity", fill = "steelblue") +
+  
   labs(title = "Number of Studies Published per Year",
        x     = "Publication Year",
        y     = "Number of Studies") +
-  theme_minimal()  # Use a minimal theme for clarity
+  
+  theme_minimal()
 ```
+
+
 
 ### Cumulative Sum Graph
 
@@ -90,21 +102,27 @@ This graph displays the cumulative count of studies published over the years.
 It helps visualize how the total number of studies increases as time progresses.
 
 ```{r}
-#| echo: true
-#| out-width: '100%'
+#| label: "calculate-cumulative-count"
 
-# Cumulative Sum Graph
+# Calculate cumulative count ----
 cumulative_data <- count_data %>%
-  arrange(Year) %>%  # Ensure data is sorted by year
-  mutate(Cumulative = cumsum(Count))  # Calculate cumulative count
+  arrange(Year) %>%
+  mutate(Cumulative = cumsum(Count))
+```
 
-# Plot the cumulative sum graph
+```{r}
+#| label: "cumulative-sum-graph"
+
+# Plot the cumulative sum graph ----
 ggplot(cumulative_data, aes(x = Year, y = Cumulative)) +
-  geom_line(linewidth = 1, color = "darkgreen") +  # Create a line graph
+  
+  geom_line(linewidth = 1, color = "darkgreen") +
+  
   labs(title = "Cumulative Count of Studies Published",
        x     = "Year",
        y     = "Cumulative Count of Studies") +
-  theme_minimal()  # Use a minimal theme for clarity
+  
+  theme_minimal()
 ```
 
 ### Grouped Graph by categories
@@ -113,29 +131,34 @@ This graph shows the cumulative count of studies based on different crop types.
 It allows for comparison of study trends across various crop systems.
 
 ```{r}
-#| echo: true
-#| out-width: '100%'
+#| label: "group-data"
 
-# Grouped Graph by Crop
-grouped_data <- TAB %>%
+# Grouped count by crop and year ----
+grouped_data <- tab %>%
   group_by(Year, System_C) %>% 
-  summarise(Count = n(),.groups = "drop") %>%
+  summarise(Count = n(), .groups = "drop") %>%
   arrange(Year) %>%
   group_by(System_C) %>%
   mutate(Cumulative = cumsum(Count)) %>% 
   ungroup()
+```
 
-# Plot the grouped cumulative count graph
+```{r}
+#| label: "grouped-graph"
 
-ggplot(grouped_data, aes(x     = Year, 
-                         y     = Cumulative, 
-                         color = System_C, 
-                         group = System_C)) +
+# Grouped cumulative count graph ----
+ggplot(grouped_data, 
+       aes(x = Year, y = Cumulative, 
+           color = System_C, group = System_C)) +
+  
   geom_line(linewidth = 1) + 
+  
   geom_point(size = 2) + 
+  
   labs(title = "Cumulative Count of Studies per Control Type", 
        x     = "Year", 
        y     = "Cumulative Count of Studies") +
+  
   theme_minimal()
 ```
 

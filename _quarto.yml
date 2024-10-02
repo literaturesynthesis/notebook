@@ -61,12 +61,25 @@ book:
   
   chapters:
     - index.qmd
-    - chapters/introduction.qmd
-    - chapters/temporal-analyses.qmd
-    - chapters/resources.qmd
+    - part: "Evidence map"
+      chapters:
+        - chapters/introduction.qmd
+        - chapters/temporal-analyses.qmd
+        - chapters/resources.qmd
     
 format:
   html:
-    theme: [cosmo, styles/main.css]
+    theme: [cosmo, styles/main.scss]
     code-copy: true
     code-line-numbers: false
+
+knitr:
+  opts_chunk: 
+    comment: "##"
+    echo: true
+    eval: true
+    warning: false
+    message: false
+    dpi: 150
+    out-width: "80%"
+    fig-align: "center"
