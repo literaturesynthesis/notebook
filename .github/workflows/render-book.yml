@@ -32,7 +32,7 @@ jobs:
             any::readxl
             any::ggplot2
             any::dplyr
-            any::DT
+            any::here
 
       - name: Render and Publish
         uses: quarto-dev/quarto-actions/publish@v2
