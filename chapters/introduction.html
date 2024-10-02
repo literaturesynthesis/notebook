@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Introduction – Exploring and visualizing meta-analytical data using R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<link href="../chapters/temporal-analyses.html" rel="next">
+<link href="../index.html" rel="prev">
+<link href="../images/favicon.png" rel="icon" type="image/png">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/introduction.html">Introduction</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Exploring and visualizing meta-analytical data using R</a> 
+    </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/introduction.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Introduction</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/temporal-analyses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Temporal analysis</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/resources.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Resources</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#toward-transparency-and-reproducibility" id="toc-toward-transparency-and-reproducibility" class="nav-link active" data-scroll-target="#toward-transparency-and-reproducibility">Toward transparency and reproducibility</a></li>
+  <li><a href="#publishing-fully-reproducible-protocols" id="toc-publishing-fully-reproducible-protocols" class="nav-link" data-scroll-target="#publishing-fully-reproducible-protocols">Publishing Fully Reproducible Protocols</a></li>
+  <li><a href="#publish-a-datapaper" id="toc-publish-a-datapaper" class="nav-link" data-scroll-target="#publish-a-datapaper">Publish a DataPaper</a>
+  <ul class="collapse">
+  <li><a href="#publishing-in-open-access-journals" id="toc-publishing-in-open-access-journals" class="nav-link" data-scroll-target="#publishing-in-open-access-journals">Publishing in Open Access Journals</a></li>
+  </ul></li>
+  <li><a href="#best-practices-for-structuring-meta-analysis-datafiles" id="toc-best-practices-for-structuring-meta-analysis-datafiles" class="nav-link" data-scroll-target="#best-practices-for-structuring-meta-analysis-datafiles">Best practices for structuring Meta-analysis DataFiles</a>
+  <ul class="collapse">
+  <li><a href="#generalities" id="toc-generalities" class="nav-link" data-scroll-target="#generalities">Generalities</a></li>
+  <li><a href="#harmonisable-classifications-of-practices-and-outcome" id="toc-harmonisable-classifications-of-practices-and-outcome" class="nav-link" data-scroll-target="#harmonisable-classifications-of-practices-and-outcome">harmonisable classifications of practices and outcome</a></li>
+  </ul></li>
+  <li><a href="#example-meta-analysis-datasets" id="toc-example-meta-analysis-datasets" class="nav-link" data-scroll-target="#example-meta-analysis-datasets">Example: Meta-analysis datasets</a>
+  <ul class="collapse">
+  <li><a href="#dataset-for-our-exercises" id="toc-dataset-for-our-exercises" class="nav-link" data-scroll-target="#dataset-for-our-exercises">Dataset for Our Exercises</a></li>
+  <li><a href="#steps-to-access-the-dataset" id="toc-steps-to-access-the-dataset" class="nav-link" data-scroll-target="#steps-to-access-the-dataset">Steps to Access the Dataset</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Introduction</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>In the context of evidence maps and meta-analyses, data files typically contain structured information derived from primary studies. A well-organized dataset is essential for ensuring transparency, reproducibility, and clarity in statistical analyses. The structure of these files plays a crucial role in data management and visualization, particularly when handling large datasets that summarize study characteristics, interventions, and outcomes. Below are some best practices and examples to follow when preparing and using such files.</p>
+<section id="toward-transparency-and-reproducibility" class="level2">
+<h2 class="anchored" data-anchor-id="toward-transparency-and-reproducibility">Toward transparency and reproducibility</h2>
+<p>The <a href="https://www.ouvrirlascience.fr/fair-principles/"><strong>FAIR principles</strong></a> (Findable, Accessible, Interoperable, and Reusable) provide a framework for improving the management and sharing of digital research assets. These principles ensure that data is discoverable through search engines, accessible with appropriate authorization, interoperable with other datasets, and reusable for various purposes. A key aspect is <strong>machine-actionability</strong>, enabling computers to process and understand data without significant human intervention.</p>
+<p><strong>France</strong> has made significant strides in promoting <strong>open science</strong>. The <strong>French National Plan for Open Science (2021-2024)</strong> mandates open access to both scientific publications and research data generated with public funding.</p>
+<p>The overarching objective of this plan is to promote transparency, accessibility, and the preservation of scientific knowledge. By mandating open access, France ensures that research funded by public resources benefits the wider global community, fostering international collaboration and cross-disciplinary advancements.</p>
+<p>A cornerstone of this effort is the adoption of the FAIR principles (Findable, Accessible, Interoperable, Reusable), which are integral in addressing common challenges in data management. By adhering to these principles, research data becomes more reliably reusable, supporting better documentation, accessibility, and data compatibility across different systems and disciplines.</p>
+<p>Breakdown of FAIR Principles:</p>
+<ul>
+<li><p><strong>Findable</strong>: Data must be easy to locate for both humans and machines. This involves assigning globally unique identifiers (such as DOIs) to datasets and ensuring that metadata is searchable and indexed in databases.</p></li>
+<li><p><strong>Accessible</strong>: Data must be accessible under clear and transparent terms. This means storing datasets in repositories that guarantee long-term access, either through open-access platforms or specialized data journals that maintain the integrity of the data over time.</p></li>
+<li><p><strong>Interoperable</strong>: Data should be compatible with other datasets and tools. Standardized formats (e.g., CSV, JSON) and recognized metadata structures like Dublin Core help ensure that datasets can be integrated and compared across different systems.</p></li>
+<li><p><strong>Reusable</strong>: Data must be well-documented, with detailed metadata providing sufficient context to allow future researchers to reuse it effectively. This includes information on the dataset’s provenance, context, and usage conditions, ensuring that it can be reliably understood and repurposed in new research contexts.</p></li>
+</ul>
+<section id="reporting-standards-in-systematic-reviews-prisma-roses-and-beyond" class="level4">
+<h4 class="anchored" data-anchor-id="reporting-standards-in-systematic-reviews-prisma-roses-and-beyond">Reporting Standards in systematic reviews: PRISMA, ROSES, and Beyond</h4>
+<p>In systematic reviews and meta-analyses, following standardized reporting guidelines is essential for transparency and reproducibility. The most widely used framework is the <strong>PRISMA (Preferred Reporting Items for Systematic Reviews and Meta-Analyses)</strong> guideline, which outlines the minimum information that should be included in a systematic review, covering everything from search strategies to result synthesis. PRISMA encourages the use of flow diagrams to illustrate the study selection process, making the review process clear and replicable.</p>
+<p>For environmental and social sciences, the <strong>ROSES (Reporting Standards for Systematic Evidence Syntheses)</strong> framework offers a tailored alternative. It includes checklists and flow diagrams similar to PRISMA but adapted for the specific challenges of conducting systematic reviews in complex, interdisciplinary fields like ecology, conservation, and agriculture.</p>
+<p><strong>Using these frameworks ensures:</strong></p>
+<ol type="1">
+<li><p><strong>Transparency in Study Selection and Data Extraction</strong>: Flow diagrams such as the PRISMA diagram clearly document how many studies were identified, screened, and ultimately included in the synthesis. This transparency helps prevent biases in study selection and allows future researchers to see the logic behind inclusion and exclusion criteria.</p></li>
+<li><p><strong>Comprehensive Reporting of Methods and Results</strong>: Both PRISMA and ROSES encourage detailed reporting of the data extraction process, statistical methods used in meta-analyses, and sensitivity analyses, which are crucial for assessing the robustness of results.</p></li>
+<li><p><strong>Enhanced Reproducibility</strong>: These guidelines ensure that other researchers can reproduce the review process, validate findings, and use the extracted data for new meta-analyses, secondary syntheses, or policy assessments.</p></li>
+</ol>
+</section>
+</section>
+<section id="publishing-fully-reproducible-protocols" class="level2">
+<h2 class="anchored" data-anchor-id="publishing-fully-reproducible-protocols">Publishing Fully Reproducible Protocols</h2>
+<p>While pre-registration of protocols has become standard practice in fields like medicine—facilitated by platforms such as PROSPERO—it is still in the early stages of adoption within agronomy and ecology. In evidence synthesis and meta-analysis, publishing detailed and reproducible research protocols is increasingly recognized as essential for enhancing transparency and minimizing bias. This approach is well-established in medical research, where systematic reviews and meta-analyses typically adhere to stringent pre-registration guidelines. However, it has yet to gain similar traction in agronomy and ecology, highlighting an important area for growth and improvement in these disciplines. Encouraging the use of pre-published protocols in these fields would improve methodological rigor, comparability of results, and overall transparency in environmental and agricultural research. Protocols describe the step-by-step methodologies researchers intend to follow before conducting a study. They ensure transparency, reproducibility, and consistency in systematic reviews, meta-analyses, and other research designs by pre-registering the research questions, criteria for study inclusion, and planned analytical methods. This practice minimizes bias, prevents selective reporting, and enhances the credibility of findings.</p>
+<section id="key-components-of-a-research-protocol" class="level4">
+<h4 class="anchored" data-anchor-id="key-components-of-a-research-protocol">Key Components of a Research Protocol</h4>
+<ol type="1">
+<li><p><strong>Research Objectives and Questions</strong>: Clearly defines the goals of the study and the specific research questions to be addressed.</p></li>
+<li><p><strong>Eligibility Criteria</strong>: Specifies which studies will be included or excluded based on predefined parameters (e.g., study design, population characteristics, intervention type).</p></li>
+<li><p><strong>Search Strategy</strong>: Describes the databases, search terms, and timeframe for literature searches.</p></li>
+<li><p><strong>Data Extraction and Coding</strong>: Outlines the methods for extracting, coding, and managing data, including variable definitions and metadata structures.</p></li>
+<li><p><strong>Risk of Bias and Quality Assessment</strong>: Details the criteria and tools used to assess the quality and potential biases of included studies.</p></li>
+<li><p><strong>Analytical Plan</strong>: Pre-specifies statistical methods, models, and subgroup analyses to be used, ensuring that analytical choices are not influenced by observed results.</p></li>
+</ol>
+</section>
+<section id="importance-in-meta-analyses-and-evidence-synthesis" class="level4">
+<h4 class="anchored" data-anchor-id="importance-in-meta-analyses-and-evidence-synthesis">Importance in Meta-Analyses and Evidence Synthesis</h4>
+<p>Publishing a detailed protocol before initiating a meta-analysis or systematic review is crucial for avoiding bias and maintaining scientific rigor. Protocols act as a roadmap, guiding researchers through the review process and serving as a reference point against which deviations can be assessed. This is particularly important for high-stakes reviews, such as those informing policy decisions or large-scale evidence syntheses in public health and environmental sciences.</p>
+<p>Well-developed protocols also enhance collaboration and standardization within research communities by enabling other researchers to replicate or build upon the same methodology. In ecological and agronomic meta-analyses, where diverse study designs and heterogeneous data sources are common, robust protocols are indispensable for harmonizing evidence and ensuring comparability across studies.</p>
+</section>
+<section id="standards-and-guidelines" class="level4">
+<h4 class="anchored" data-anchor-id="standards-and-guidelines">Standards and Guidelines</h4>
+<p>Several frameworks provide comprehensive guidance for developing and publishing reproducible protocols:</p>
+<ul>
+<li><p><strong>Cochrane Handbook for Systematic Reviews</strong>: The Cochrane Collaboration sets the gold standard for systematic reviews in health and medical research. Its protocols follow a highly structured format that emphasizes transparency, replicability, and methodological rigor.</p></li>
+<li><p><strong>ROSES (RepOrting standards for Systematic Evidence Syntheses)</strong>: Tailored for ecological and environmental sciences, the ROSES framework outlines specific guidelines for planning and reporting systematic reviews and maps in these fields.</p></li>
+<li><p><strong>PRISMA-P (Preferred Reporting Items for Systematic Review and Meta-Analysis Protocols)</strong>: PRISMA-P is designed to standardize the reporting of protocols for systematic reviews and meta-analyses, ensuring all critical elements are included.</p></li>
+</ul>
+</section>
+<section id="journals-specializing-in-protocols" class="level4">
+<h4 class="anchored" data-anchor-id="journals-specializing-in-protocols">Journals Specializing in Protocols</h4>
+<p>Several specialized journals focus on publishing research protocols, providing a platform for researchers to share detailed methodological plans and facilitate reproducibility:</p>
+<ul>
+<li><p><strong>BMC Systematic Reviews</strong>: Publishes protocols and reviews in health, social, and environmental sciences. BMC Systematic Reviews requires that all protocols adhere to PRISMA-P or similar reporting standards.</p></li>
+<li><p><strong>Protocols.io</strong>: An open-access platform that allows researchers to publish detailed experimental protocols, workflows, and analysis pipelines. It is widely used across disciplines to promote transparent research.</p></li>
+<li><p><strong>BMJ Open</strong>: Features protocols for any research area, including environmental, health, and social sciences. The journal emphasizes open science and reproducibility.</p></li>
+<li><p><strong>Nature Protocols</strong>: Focuses on detailed experimental protocols in life sciences. Although primarily designed for laboratory research, it offers high visibility for methodological papers.</p></li>
+<li><p><strong>PROSPERO</strong>: An international database for pre-registering protocols of systematic reviews focused on health and social care.</p></li>
+</ul>
+</section>
+<section id="example-of-a-protocol-publication" class="level4">
+<h4 class="anchored" data-anchor-id="example-of-a-protocol-publication">Example of a Protocol Publication</h4>
+<p><strong>Rousset, C., Segura, C., Gilgen, A., Alfaro, M., Mendes, L.A., Dodd, M., Dashpurev, B., Bastidas, M., Rivera, J., Merbold, L. and Vázquez, E., 2024. What evidence exists relating the impact of different grassland management practices to soil carbon in livestock systems? A systematic map protocol. <em>Environmental Evidence</em>, <em>13</em>(1), p.22.</strong></p>
+<p>This protocol describes a systematic review and meta-analysis aimed at adapting health systems in crisis settings. The document pre-specifies all methodological details, including eligibility criteria, data extraction strategies, and planned analyses, ensuring reproducibility and transparency throughout the study.</p>
+</section>
+<section id="useful-links-for-protocol-standards-and-templates" class="level4">
+<h4 class="anchored" data-anchor-id="useful-links-for-protocol-standards-and-templates">Useful Links for Protocol Standards and Templates</h4>
+<ul>
+<li><p><strong>Cochrane Handbook for Systematic Reviews of Interventions</strong>: Cochrane Handbook</p></li>
+<li><p><strong>PRISMA-P Reporting Guidelines</strong>: PRISMA-P Checklist</p></li>
+<li><p><strong>ROSES Guidelines for Environmental Sciences</strong>: <a href="http://www.roses-reporting.com">ROSES Reporting Standards</a></p></li>
+<li><p><strong>Equator Network</strong>: A comprehensive resource for research reporting guidelines and protocol standards: <a href="https://www.equator-network.org">Equator Network</a></p></li>
+</ul>
+<pre><code>useful links: https://environmentalevidencejournal.biomedcentral.com/submission-guidelines/preparing-your-manuscript/systematic-review-protocol</code></pre>
+</section>
+</section>
+<section id="publish-a-datapaper" class="level2">
+<h2 class="anchored" data-anchor-id="publish-a-datapaper">Publish a DataPaper</h2>
+<p>A Data Paper is a publication dedicated to describing the structure, collection, and value of a dataset. Unlike traditional research papers, which focus on findings and interpretations, Data Papers emphasize the metadata, methodology, and potential uses of the dataset itself. They offer detailed insights into how the data was gathered, processed, and structured, which is essential for reproducibility in scientific studies. Key Components of a Data Paper:</p>
+<ul>
+<li>Dataset Overview: Provides a summary of the dataset, including its purpose and potential applications.<br>
+</li>
+<li>Metadata: Describes each variable, including units of measurement, data types, and any transformations applied.<br>
+</li>
+<li>Collection Methods: Details the experimental or observational methods used to gather the data.<br>
+</li>
+<li>Limitations and Uncertainties: Discloses any potential biases, gaps, or limitations in the dataset.<br>
+</li>
+<li>Data Access: Specifies how the data can be accessed and reused, often with a permanent DOI link.</li>
+</ul>
+<p>In evidence mapping and meta-analyses, the publication of Data Papers ensures that large datasets, which could be difficult to interpret otherwise, are accompanied by clear, accessible documentation. This reduces barriers to data reuse and promotes collaboration across research communities.</p>
+<p><strong>Journals Publishing Data Papers</strong></p>
+<p>Several specialized journals focus on publishing Data Papers, promoting high-quality data curation and sharing. <a href="https://www.nature.com/sdata/">Scientific Data</a>(by Nature Research) and <a href="https://www.sciencedirect.com/journal/data-in-brief">Data in Brief</a> (by Elsevier) are prominent examples, offering platforms for data-specific publications. These journals often require the dataset to be archived in an open-access repository, accompanied by rich metadata, and adhere to rigorous peer review processes. For example, <a href="https://bdj.pensoft.net/">Biodiversity Data Journal</a> also publish data papers focused on biodiversity and ecological datasets. This ensures that the data shared is of high quality, reusable, and follows best practices for transparency and openness.</p>
+<p><strong>Example of Data Papers:</strong></p>
+<ul>
+<li><p>Beillouin, Damien, Marc Corbeels, Julien Demenois, David Berre, Annie Boyer, Abigail Fallot, Frédéric Feder, and Rémi Cardinael. “A global meta-analysis of soil organic carbon in the Anthropocene.” <em>Nature Communications</em> 14, no. 1 (2023): 3700.</p></li>
+<li><p>Byun, E., Müller, C., Parisse, B., Napoli, R., Zhang, J.B., Rezanezhad, F., Van Cappellen, P., Moser, G., Jansen-Willems, A.B., Yang, W.H. and Urakawa, R., 2024. A global dataset of gross nitrogen transformation rates across terrestrial ecosystems. <em>Scientific Data</em>, <em>11</em>(1), p.1022.</p></li>
+</ul>
+<pre class="english"><code>useful links: 
+-   CIRAD publier un Datapaper https://coop-ist.cirad.fr/gerer-des-donnees/publier-un-data-paper/1-qu-est-ce-qu-un-data-paper 
+
+-   CINES, 2017. Les formats de fichier. https://www.cines.fr/archivage/des-expertises/les-formats-de-fichier/
+
+-   CNRS, 2023 (version 2.0) . Guide de bonnes pratiques sur la gestion des données de recherche. Publier un Datapaper pour valoriser et expliciter les données. https://mi-gt-donnees.pages.math.unistra.fr/guide/00-introduction.html
+
+-   DoRANum, 2018. La minute Publier un Data paper. https://doi.org/10.13143/4mhn-mq42</code></pre>
+<section id="publishing-in-open-access-journals" class="level3">
+<h3 class="anchored" data-anchor-id="publishing-in-open-access-journals">Publishing in Open Access Journals</h3>
+<p>When submitting research for publication, consider choosing open access journals, particularly those that operate on a non-profit basis. This approach ensures that publicly funded research is readily accessible to the public, promoting transparency and facilitating broader dissemination of knowledge. Open access publishing removes paywalls, allowing researchers, practitioners, and policymakers to engage with your work without financial barriers, thereby enhancing the impact and reach of your findings. Prioritizing non-profit journals also supports sustainable publishing practices that align with the principles of open science.</p>
+</section>
+</section>
+<section id="best-practices-for-structuring-meta-analysis-datafiles" class="level2">
+<h2 class="anchored" data-anchor-id="best-practices-for-structuring-meta-analysis-datafiles">Best practices for structuring Meta-analysis DataFiles</h2>
+<section id="generalities" class="level3">
+<h3 class="anchored" data-anchor-id="generalities">Generalities</h3>
+<ol type="1">
+<li><p><strong>Consistent Naming Conventions</strong>: Ensure that file names are clear, consistent, and meaningful. For example, naming columns such as <code>Study_ID</code>, <code>Outcome</code>, <code>Intervention</code>, and <code>Effect_Size</code> helps in avoiding confusion during data manipulation. Avoid special characters in column names, and use underscores or camel case for readability (e.g., <code>StudyName</code> or <code>study_name</code>).</p></li>
+<li><p><strong>Comprehensive Metadata</strong>: Metadata should accompany the main data file, providing explanations of each column and the coding used (e.g., what constitutes “intervention type” or “effect size unit”). A “Data Dictionary” should always be part of your dataset, explaining variables such as:</p>
+<ul>
+<li><code>Outcome</code>: The primary outcome measured in the study.</li>
+<li><code>Intervention</code>: Types of interventions, such as “land-use change” or “management.”</li>
+<li><code>Effect_Size</code>: Numeric or categorical data on effect size (e.g., Hedge’s g or Cohen’s d).</li>
+</ul></li>
+<li><p><strong>Wide vs.&nbsp;Long Format</strong>: Choose the format that best suits your analysis:</p></li>
+</ol>
+<ul>
+<li><p><em>Wide Format</em>: Used when each row represents a study, with multiple columns for each outcome (e.g., separate columns for effect sizes).</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Field</th>
+<th>Soil pH</th>
+<th>Nitrogen Content (%)</th>
+<th>Crop Yield (kg/ha)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>6.5</td>
+<td>45</td>
+<td>3000</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>6.8</td>
+<td>50</td>
+<td>3200</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>6.2</td>
+<td>40</td>
+<td>2800</td>
+</tr>
+</tbody>
+</table></li>
+<li><p><em>Long Format</em>: More suitable for meta-analysis and visualization in R. Each row contains a single observation or a study’s outcome, which allows for easier aggregation, filtering, and plotting.</p></li>
+</ul>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Field</th>
+<th>Variable</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Soil pH</td>
+<td>6.5</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>Nitrogen Content</td>
+<td>45</td>
+</tr>
+<tr class="odd">
+<td>1</td>
+<td>Crop Yield</td>
+<td>3000</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Soil pH</td>
+<td>6.8</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>Nitrogen Content</td>
+<td>50</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Crop Yield</td>
+<td>3200</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Soil pH</td>
+<td>6.2</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td>Nitrogen Content</td>
+<td>40</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Crop Yield</td>
+<td>2800</td>
+</tr>
+</tbody>
+</table>
+<ol start="4" type="1">
+<li><p><strong>Handling Missing Data</strong>: It’s common to encounter missing data in meta-analyses. Best practices include:</p>
+<ul>
+<li>Using a consistent code for missing values, such as <code>NA</code>.</li>
+<li>Avoiding empty cells, which can cause issues when importing data into R.</li>
+<li>Documenting missing data in the metadata.</li>
+</ul></li>
+<li><p><strong>Version Control</strong>: Ensure version control for your datasets. Tools like Git or a simple versioning system (e.g., <code>dataset_v1.csv</code>, <code>dataset_v2.csv</code>) can help track changes and maintain the integrity of your data over time.</p></li>
+<li><p><strong>Data Cleanliness</strong>: Ensure all numeric data are formatted correctly (e.g., avoid mixing numbers and text in the same column). Double-check for typographical errors, duplicates, and inconsistencies in categorical data. Tools like <code>dplyr::mutate()</code> and <code>tidyr::pivot_longer()</code> can aid in cleaning and restructuring data for analysis.</p></li>
+</ol>
+</section>
+<section id="harmonisable-classifications-of-practices-and-outcome" class="level3">
+<h3 class="anchored" data-anchor-id="harmonisable-classifications-of-practices-and-outcome">harmonisable classifications of practices and outcome</h3>
+<p>Meta-analysis and evidence synthesis necessitate consistent and harmonized classifications of interventions, practices, and outcomes to ensure the comparability of findings across studies and geographic contexts. In agricultural and ecological research, the diversity of practices, variations in terminology, and the complex relationships between interventions and their impacts on multiple outcomes complicate this classification task. This chapter highlights the importance of employing ontologies as a foundational step in developing harmonizable classifications. Investing the time to establish clear definitions and boundaries between classes for practices, outcomes, and site descriptions is crucial. A well-defined research question can further refine the scope, facilitating the classification process. By systematically categorizing agricultural practices and outcomes, researchers can enhance the rigor and relevance of meta-analytical studies, ultimately contributing to more robust evidence synthesis</p>
+</section>
+</section>
+<section id="example-meta-analysis-datasets" class="level2">
+<h2 class="anchored" data-anchor-id="example-meta-analysis-datasets">Example: Meta-analysis datasets</h2>
+<p>To explore and utilize meta-analysis datasets, you can refer to the metadat package in R, which provides a comprehensive collection of datasets tailored for teaching, illustrating meta-analytic methods, and validating published analyses. You can install the package from CRAN using:</p>
+<p>Once installed, you can browse available datasets by using:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install metadat package</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("metadat")</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># load metadat package</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(metadat)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#List of dataset included</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(<span class="at">package =</span> metadat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Each dataset is well-documented with metadata, including concept terms such as research field, outcome measures, and analytic models. These metadata provide insight into the structure and purpose of each dataset. Additionally, the datsearch() function allows you to search for datasets based on specific concept terms or perform a full-text search through their documentation.</p>
+<p>The datasets in metadat follow structured formats, typically containing variables related to effect sizes, moderators, and sample information. To contribute or explore more in-depth examples, visit the package’s online documentation at metadat GitHub, where you can also view the output of example analyses for each dataset</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load curtis databse</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat.curtis1998</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Explore curtis data</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("skimr")</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  id paper   genus     species fungrp co2.ambi co2.elev units time pot method
+1 21    44   ALNUS       RUBRA  N2FIX      350      650  ul/l   47 0.5     GC
+2 22    44   ALNUS       RUBRA  N2FIX      350      650  ul/l   47 0.5     GC
+3 27   121    ACER      RUBRUM  ANGIO      350      700   ppm   59 2.6     GH
+4 32   121 QUERCUS      PRINUS  ANGIO      350      700   ppm   70 2.6     GH
+5 35   121   MALUS   DOMESTICA  ANGIO      350      700   ppm   64 2.6     GH
+6 38   121    ACER SACCHARINUM  ANGIO      350      700   ppm   50 2.6     GH
+  stock xtrt   level     m1i      sd1i n1i    m2i      sd2i n2i
+1  SEED FERT    HIGH  6.8169 1.7699820   3 3.9450 1.1157970   5
+2  SEED FERT CONTROL  2.5961 0.6674662   5 2.2512 0.3275839   5
+3  SEED NONE       .  2.9900 0.8560000   5 1.9300 0.5520000   5
+4  SEED NONE       .  5.9100 1.7420000   5 6.6200 1.6310000   5
+5  SEED NONE       .  4.6100 1.4070000   4 4.1000 1.2570000   4
+6  SEED NONE       . 10.7800 1.1630000   5 6.4200 2.0260000   3</code></pre>
+</div>
+</div>
+<section id="dataset-for-our-exercises" class="level3">
+<h3 class="anchored" data-anchor-id="dataset-for-our-exercises">Dataset for Our Exercises</h3>
+<p>We will be using the dataset titled <a href="https://www.nature.com/articles/s41597-021-01000-y">A Global Database of Diversified Farming Effects on Biodiversity and Yield</a>. This comprehensive dataset includes 4,076 comparisons of biodiversity outcomes and 1,214 comparisons of yield in diversified farming systems, contrasting these outcomes with two reference systems.</p>
+<p>The dataset encompasses evidence from 48 countries and evaluates the effects of diversified farming systems on species across 33 taxonomic orders, including insects, plants, birds, mammals, eukaryotes, annelids, fungi, and bacteria. It specifically addresses systems that produce both annual and perennial crops across 12 commodity groups.</p>
+<p>This dataset serves as a valuable resource for researchers and practitioners, facilitating access to critical information regarding the positive contributions of diversified farming systems to both biodiversity and food production outcomes.</p>
+</section>
+<section id="steps-to-access-the-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="steps-to-access-the-dataset">Steps to Access the Dataset</h3>
+<ol type="1">
+<li><strong>Load the File from Harvard Dataverse</strong><br>
+Visit the <a href="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/XIDI1X">Harvard Dataverse website</a>.<br>
+Download all files and save them in your current working directory.</li>
+</ol>
+<p>By following these steps, you will be well-equipped to utilize the dataset for the upcoming exercises in this module.<br>
+</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("readxl")</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># charge le fichier</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>Meta_Data <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="at">path  =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"dataset-1-sources.xlsx"</span>), </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                                <span class="at">sheet =</span> <span class="st">"Literature_screened"</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Meta_Data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 19
+     ID Article_source  Inclusion_yes_no Exclusion_reasion_pico Exclusion_reason
+  &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;            &lt;chr&gt;                  &lt;chr&gt;           
+1    13 Stakeholder re… Yes              NA                     NA              
+2    15 Scopus or WoS   No               Unsuitable outcomes    Effect on yield…
+3    18 Stakeholder re… Yes              NA                     NA              
+4    25 Scopus or WoS   No               Unsuitable population  Irrelevant      
+5    30 Stakeholder re… Yes              NA                     NA              
+6    34 Stakeholder re… Yes              NA                     NA              
+# ℹ 14 more variables: Authors &lt;chr&gt;, Year &lt;dbl&gt;, Title &lt;chr&gt;,
+#   Source.title &lt;chr&gt;, Volume &lt;chr&gt;, Issue &lt;chr&gt;, Art_No &lt;chr&gt;,
+#   Page_start &lt;chr&gt;, Page_end &lt;chr&gt;, Page_count &lt;chr&gt;, DOI &lt;chr&gt;, Link &lt;chr&gt;,
+#   ISSN &lt;chr&gt;, ISBN &lt;chr&gt;</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Outcome <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_excel</span>(<span class="at">path  =</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"dataset-2-outcomes.xlsx"</span>), </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                              <span class="at">sheet =</span> <span class="st">"Data"</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Outcome)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 105
+     ID Experiment_stage Comparison_ID_C Comparison_class_C Crop_C Crop_FAO_C   
+  &lt;dbl&gt; &lt;chr&gt;            &lt;chr&gt;           &lt;chr&gt;              &lt;chr&gt;  &lt;chr&gt;        
+1  1033 1                C1              Natural            Forest NA           
+2  1033 1                C2              Simplified         Coffee 12 - STIMULA…
+3  1033 2                C1              Natural            Forest NA           
+4  1033 2                C2              Simplified         Coffee 12 - STIMULA…
+5  1033 3                C2              Simplified         Coffee 12 - STIMULA…
+6  1033 4                C1              Natural            Forest NA           
+# ℹ 99 more variables: Crop_ann_pen_C &lt;chr&gt;, Crop_woodiness_C &lt;chr&gt;,
+#   crops_all_common_C &lt;chr&gt;, crops_all_scientific_C &lt;chr&gt;,
+#   crops_all_scientific_level_C &lt;chr&gt;, System_raw_C &lt;chr&gt;,
+#   System_details_C &lt;chr&gt;, System_C &lt;chr&gt;, Fertiliser_C &lt;chr&gt;,
+#   Fertiliser_chem_C &lt;chr&gt;, Pesticide_C &lt;chr&gt;, Pesticide_quantity_C &lt;chr&gt;,
+#   Soil_management_C &lt;chr&gt;, Time_state_C &lt;chr&gt;, Study_length_C &lt;chr&gt;,
+#   Sampling_unit_C &lt;chr&gt;, B_error_measure_C &lt;chr&gt;, B_error_value_C &lt;dbl&gt;, …</code></pre>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../index.html" class="pagination-link" aria-label="Welcome">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Welcome</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/temporal-analyses.html" class="pagination-link" aria-label="Temporal analysis">
+        <span class="nav-page-text">Temporal analysis</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© Damien Beillouin</p>
+</div>   
+    <div class="nav-footer-center">
+<p>Code source available on <a href="https://github.com/dbeillouin/Visualisation1/"><i class="fa-brands fa-github" aria-label="github"></i></a></p>
+</div>
+    <div class="nav-footer-right">
+<p>Built with <a href="https://quarto.org/">Quarto</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
