@@ -1,0 +1,43 @@
+project:
+  type: book
+
+book:
+  title: "Exploring and visualizing meta-analytical data using R"
+  
+  author: 
+    - name: "Damien Beillouin"
+      orcid: "0000-0003-2014-3482"
+      url: "https://www.researchgate.net/profile/Damien-Beillouin"
+      affiliations: 
+        - name: Cirad HortSys
+          url: "https://ur-hortsys.cirad.fr/"
+
+  date: today
+  description: ""
+
+  favicon: images/favicon.png
+  
+  sidebar: 
+    style: "docked"
+    collapse-level: 1
+
+  page-footer: 
+    left: "&copy; Damien Beillouin"
+    center: "Code source available on [{{< fa brands github >}}](https://github.com/dbeillouin/Visualisation1/)"
+    right: "Built with [Quarto](https://quarto.org/)"
+    border: true
+  
+  reader-mode: false
+  search: false
+  
+  chapters:
+    - index.qmd
+    - chapters/introduction.qmd
+    - chapters/temporal-analyses.qmd
+    - chapters/resources.qmd
+    
+format:
+  html:
+    theme: [cosmo, styles/main.css]
+    code-copy: true
+    code-line-numbers: false

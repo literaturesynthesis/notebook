@@ -1,0 +1,32 @@
+---
+toc: true
+---
+
+# Welcome {.unnumbered}
+
+This training module is designed to provide an introduction to data exploration and visualization using {{< fa brands r-project >}}, with a particular focus on meta-analysis. The course is built around hands-on exercises aimed at developing essential skills for manipulating, summarizing, and presenting data in a clear, visually appealing format. By leveraging {{< fa brands r-project >}} packages such as `ggplot2`, `cowplot`, and `rnaturalearth`, participants will learn how to generate meaningful visual representations, such as histograms, maps, treemaps, heatmaps, and bubble plots.
+
+The data used in this course comes from various scientific studies that analyze the impact of human interventions on various outcomes. The exercises cover a wide range of techniques, from simple bar charts to more complex visualizations like interactive maps and dynamic tables. The primary goal is to equip participants with practical tools to explore large dataset, summarize findings, and effectively communicate results in scientific contexts.
+
+Whether you're new to {{< fa brands r-project >}} or looking to expand your data visualization skills, this module will provide you with a strong foundation in the fundamentals of data analysis and graphical presentation, emphasizing clarity, accuracy, and aesthetic quality in your work.
+
+
+## Material {.unnumbered}
+
+All the material used in this book is available at: <https://github.com/dbeillouin/Visualisation1/>
+
+
+
+## Citation {.unnumbered}
+
+> Add a citation...
+
+
+## Contributions {.unnumbered}
+
+If you see mistakes or want to suggest changes, please [create an issue](https://github.com/dbeillouin/Visualisation1/issues/new) on the source repository.
+
+
+## Reuse {.unnumbered}
+
+Text and figures are licensed under Creative Commons Attribution [CC By 4.0](https://creativecommons.org/licenses/by/4.0/), unless otherwise noted.
